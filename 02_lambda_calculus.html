@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lambda Calculus</title>
+</head>
+<body>
+
+<!--Nice introduction-->
+<!-- https://www.youtube.com/watch?v=3VQ382QG-y4-->
+<!--https://www.youtube.com/watch?v=pAnLQ9jwN-E&t=0s-->
+
+
+<!--
+Fundamentals of Lambda Calculus &
+Functional Programming in JavaScript,
+Parts I and II.-->
+
+<h2>Lambda-Calculus-World</h2>
+
+<h3>alpha translation</h3>
+<p>alpha: Rename parameter</p>
+
+const id = x => x
+<br>
+const id = y => y
+
+<h3>beta reduction</h3>
+<p>beta: Apply argument parameter</p>
+(f => x => f(x)) (id) (1) // 1. (id) bei f einsetzen
+<br>
+(     x =>  id(x))     (1) // 2. (1) bei x einsetzen
+<br>
+(           id(1)) // 3.
+<br>
+(x => x) (1)
+<br>
+1
+
+<h3>eta reduction</h3>
+<p>eta: Cancel parameter</p>
+x => y => plus(x)(y) // 1. (y) bei y einsetzen
+<br>
+x => plus(x) // 2. (x) bei x einsetzen
+<br>
+plus // plus bleibt
+
+<br>
+<br>
+<br>
+<br>
+<i>check script content:</i>
+
+<script>
+  <!--add my notes todo-->
+
+
+  // introduce id function
+  const id = x => x;
+
+  // we need a second function // Kestrel
+  const Konst = x => y => x;
+
+  // we need a third one
+  const Kite = x => y => y;
+
+  // with this 3 combinators we can write everything else
+
+  document.writeln(id(id) === id);
+  document.writeln(Konst(id)(undefined) === id);
+  document.writeln(Kite(undefined)(id) === id)
+</script>
+
+
+</body>
+</html>

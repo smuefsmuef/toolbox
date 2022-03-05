@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lambda Calculus</title>
+</head>
+<body>
+
+<h1>Scopes</h1>
+<ul>
+  <li>global - window( in Browser)</li>
+  <li>function - no matter where defined, variables are local to the enclosing function (lambda)
+  </li>
+</ul>
+
+<h2>JS Variables</h2>
+<ul>
+  <li>x (do not use)</li>
+  <li>var x (do not use much, old)</li>
+  <li>let x</li>
+  <li>const x</li>
+</ul>
+x
+
+<h2>immediately invoked function expression</h2>
+<ul>
+  <li>function foo() {...}; foo() // original</li>
+  <li>(function foo() {...}) () /// IIFE with ()</li>
+  <li>(function() {...}) () // drop the foo</li>
+  <li>( () => {...}) () // even shorter</li>
+</ul>
+
+<br>
+<br>
+<br>
+<br>
+<i>check script content:</i>
+<script>
+
+  // introduce IIFI to get a scope, don't forget to invoke the function!!
+  let x = 0;
+  (() => {
+    let x = 1;
+    document.writeln(x); //1
+  })();
+  document.writeln(x); // 0
+
+  // nowadays even simpler, with anonymous blocks
+  let y = 0;
+  {
+    let y = 1;
+    document.writeln(y); //1
+  }
+  document.writeln(y); // 0
+
+</script>
+
+
+<!--add my notes todo-->
+
+
+</script>
+
+</body>
+</html>

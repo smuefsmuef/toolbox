@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Function Tests</title>
+</head>
+<body>
+https://eloquentjavascript.net/index.html
+
+<br>
+<br>
+<br>
+<br>
+<i>check script content:</i>
+<script>
+
+  // Simple validations
+  document.writeln("test"); // test
+  document.writeln(true); // true
+  document.writeln(false); // false
+  document.writeln("---");
+  document.writeln(1 === 0); // false
+  document.writeln(1 === 1); // true
+  document.writeln(1 == 1); // true
+  document.writeln("---");
+
+  // function with return keyword
+  function fun1() {
+    return 1;
+  }
+
+  document.writeln(fun1() === 1); // true
+  document.writeln(fun1(42) === 1); // true
+  document.writeln("---");
+
+  // functions with return keyword and arg
+  function fun2() {
+    return 1;
+  }
+
+  function fun2(arg) {
+    return arg;
+  }
+
+  document.writeln(fun2() !== 1); // true
+  document.writeln(fun2() === undefined); // true
+  document.writeln(fun2(42) === 42); // true
+  document.writeln("---");
+
+  // functions with no return keyword
+  function noReturn() {
+    1;
+  }
+
+  const noReturn2 = () => {
+    1;
+  };
+  // const noReturn2 = () => { return 1; };
+  const noReturn3 = () => 1;
+
+  document.writeln(noReturn() !== 1); // true
+  document.writeln(noReturn()); // undefined
+  document.writeln(noReturn2() !== 1);// true
+  document.writeln(noReturn3() === 1); // true
+  document.writeln("---");
+
+
+  // defunction
+  const myfun = fun1;
+  const funs = [null, undefined, fun1, fun2]; // store functions in an array
+
+  // defuction
+  document.writeln("---first approach---");
+
+  document.writeln( myfun() === 1 );
+  document.writeln( funs[2]() === 1 );// funs[2] refrence to function, can call it
+  document.writeln("---");
+
+  function doit(whatToDo) {
+    return function bla(arg) {
+      return whatToDo(arg);
+    }
+  }
+  document.writeln( doit(fun1)(10) === 1 ); // true
+  document.writeln( doit(fun2)(10) === 10 ); // true
+  document.writeln("---");
+
+  // different approach
+  const doit2 = callme => arg => callme(arg) ; // same as above, callme of type functiom, returns function
+
+  document.writeln( doit2(fun1)(10) === 1 );
+  document.writeln( doit2(fun2)(10) === 1 ); // false
+  document.writeln( doit2(fun2)(10) === 10 ); // true
+
+  document.writeln("---");
+  // different approach-curried style
+  // instead of having many arguments, we pass one at the time
+  //Currying is a transformation of functions that translates a function from callable as f(a, b, c) into callable as f(a)(b)(c).
+
+
+  // curry example I
+  function doit(whatToDo) {
+    return function bla(arg) {
+      return whatToDo(arg);
+    }
+  }
+  const doit2 = callme => arg => callme(arg) ; // same as above, callme of type functiom, returns function
+
+
+  const doFun2 = doit2(fun1); // store funtction in const
+  //
+  document.writeln( doFun2(10) === 1 );
+  document.writeln( doFun2()   === 1 );
+
+
+  // curry example II
+  // curried function with => notation.
+  // Write a function named 'plus' that returns the sum of its arguments,
+  // where the arguments are being passed in curried style, such that for all
+  // numbers x and y, plus(X)(Y) === x + y.
+  // Use the => notation exclusivly, i.e. no "function"(keyword)
+
+  // construction / deconstruction of a curry function
+  function curry(f) { // curry(f) does the currying transform
+    return function(a) {
+      return function(b) {
+        return f(a, b);
+      };
+    };
+   }
+    const curry = (f) => (a) => (b) => f(a,b)  //selbes!
+
+
+  // works! aber noch ein schritt zuviel
+  const curry = (f) => (a) => (b) => f(a,b)
+  const QUIZZZZZ = (a,b) => a+b
+  let plus = curry(QUIZZZZZ);
+  // -----
+  let plus = a => b => a + b   // ist das selbe!
+
+
+  const curry = (QUIZZZZZ) => (a) => (b) => f(a,b)
+  const plus = a => b => a + b; // todo yes final!
+
+  // // tested against
+  // const x_ = Math.random();
+  // const y_ = Math.random();
+  // const plus3 = plus(3);
+  // document.writeln(plus(x_)(y_) === x_ + y_ && plus3(y_) === y_ +3) // true
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
