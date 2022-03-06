@@ -18,12 +18,57 @@ Parts I and II.-->
 
 <h2>Lambda-Calculus-World</h2>
 
+<h3>combinators</h3>
+<h4>identity</h4>
+const I = a => a;
+<br>
+I(4); // 4
+
+<h4>kestrel</h4>
+const K = a => b => a;<br>
+K(4)(2); // 4
+
+<h4>kite</h4>
+const KI = a => b => b;<br>
+KI(4)(2); // 2
+
+<h4>cardinal</h4>
+const C = f => a => b => f(b)(a);
+<br>
+KI(4)(2); // 2
+
+<h4>Boolean</h4>
+<strong>helper function</strong>
+const True = K;
+const False = KI;
+<p>
+  When we come to test our boolean logic, it will be useful to have a helper function which can convert these back to JavaScript booleans.
+</p>
+
+Function.prototype.toJsBool = function()  { return this(true)(false); }
+
+True.toJsBool(); // true
+False.toJsBool(); // false
+
+
+
+
 <h3>alpha translation</h3>
 <p>alpha: Rename parameter</p>
+
+<p>Two expressions are AlphaEquivalent if one can be obtained from the other by non-clashing substitution of FreeVariable names.
+\x.\y.xyz is Alpha Equivalent to \a.\b.abz
+but \x.\y.xyz is equivalent to neither \a.\b.abc nor \a.\a.aaz*!/ </p>
+<p><strong>--> alpha translation:</strong> It captures the intuition that the particular choice of a bound variable,
+in an abstraction, does not (usually) matter. <br>
+For instance, λx.x and λy.y are alpha-equivalent lambda terms, and they both represent the same function (the identity function).
+</p>
 
 const id = x => x
 <br>
 const id = y => y
+<br>
+
 
 <h3>beta reduction</h3>
 <p>beta: Apply argument parameter</p>
@@ -36,6 +81,23 @@ const id = y => y
 (x => x) (1)
 <br>
 1
+<br>
+example:
+<br>
+const id = x => x;
+<br>
+const a1 = y => id(y);
+<br>
+const a2 = y => y;
+<br>
+test
+<br>
+document.writeln(a1(2) === a2(2)) // true
+<br>
+document.writeln(a1(2)) // 2
+<br>
+document.writeln(a2(2)) // 2
+<br>
 
 <h3>eta reduction</h3>
 <p>eta: Cancel parameter</p>
