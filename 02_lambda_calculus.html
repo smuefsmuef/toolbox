@@ -10,15 +10,16 @@
 <!-- https://www.youtube.com/watch?v=3VQ382QG-y4-->
 <!--https://www.youtube.com/watch?v=pAnLQ9jwN-E&t=0s-->
 
-
 <!--
 Fundamentals of Lambda Calculus &
 Functional Programming in JavaScript,
 Parts I and II.-->
 
 <h2>Lambda-Calculus-World</h2>
+<a href="https://mattwolf-corporation.gitbook.io/ip6-lambda-calculus/forschungsarbeit-ip6-fortschrittliche-abstraktionen-im-lambda-kalkuel" >Lambda project fhnw</a>
 
 <h3>combinators</h3>
+
 <h4>identity</h4>
 const I = a => a;
 <br>
@@ -36,11 +37,40 @@ KI(4)(2); // 2
 const C = f => a => b => f(b)(a);
 <br>
 KI(4)(2); // 2
+<br>
+<br>
+<h3>
+  atoms
+</h3>
+const id = x => x;
+<br>
+const konst = x => y => x;
+
+<h3> y-combinator -> 'encoding life' --> self-replication -- recursions --> loops</h3>
 
 <h4>Boolean</h4>
 <strong>helper function</strong>
 const True = K;
+<br>
 const False = KI;
+<br>
+<br>
+<h4>TRUE FALSE</h4>
+const T = konst;
+<br>// const T = x => y => x;
+<br>const F = snd;
+<br>// const F = x => y => y;
+
+<h4>AND</h4>
+// const and = p => q => p(q(T)(F)) (q(F)(F));
+<br>// boolean (if), replace with q (first part), umformung
+<br>const and = p => q => p(q) (p);
+
+<h4>OR</h4>
+//const or = p => q => p(q(T)(T)) (q(T)(F))
+<br>// umformung
+<br>const or = p => q => p(p)(q)
+
 <p>
   When we come to test our boolean logic, it will be useful to have a helper function which can convert these back to JavaScript booleans.
 </p>
@@ -49,7 +79,6 @@ Function.prototype.toJsBool = function()  { return this(true)(false); }
 
 True.toJsBool(); // true
 False.toJsBool(); // false
-
 
 
 
@@ -107,6 +136,38 @@ x => plus(x) // 2. (x) bei x einsetzen
 <br>
 plus // plus bleibt
 
+<br>
+
+<h3>Product Types, Datastructures</h3>
+<h4>Pairs</h4>
+const Pair = x => y => f => f(x)(y);
+<br>// const firstname = x => y => x;
+<br>const firstname = konst;
+<br>// const lastname = x => y => y;
+<br>const lastname = snd;
+<br><strong>once x is in the scope it's immutable! So the pair is immutable!! important i JS</strong>
+<br>
+<br>
+<br>
+<h4>Either (f.e. for safe division)</h4>
+const safeDiv = num => divisor => divisor === 0 ?
+<br>Left("schlecht!") : Right(num / divisor);
+<br>
+<br>either( safeDiv(1)(0)  )
+<br>( x => console.error(x))
+<br>( x => console.log(x));
+<br>// we need to provide to functions --> checking for error case!!!
+<br>
+<br>const Left = x => f => g => f(x)
+<br>const Right = x => f => g =>g(x)
+<br>const either = e => f => g => e(f)(g) // eta reduction
+<br> const either = e => f => e(f)// // eta reduction
+<br>const either = e => e // // eta reduction
+<br>const either = id;
+<br>
+einfach: safeDiv(1)(1)
+<br>(x => console.error(x))
+<br>(x => console.log(x))
 <br>
 <br>
 <br>
