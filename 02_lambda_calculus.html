@@ -82,7 +82,7 @@ False.toJsBool(); // false
 
 
 
-<h3>alpha translation</h3>
+<h3>Alpha Translation</h3>
 <p>alpha: Rename parameter</p>
 
 <p>Two expressions are AlphaEquivalent if one can be obtained from the other by non-clashing substitution of FreeVariable names.
@@ -99,7 +99,7 @@ const id = y => y
 <br>
 
 
-<h3>beta reduction</h3>
+<h3>Beta Reduction</h3>
 <p>beta: Apply argument parameter</p>
 (f => x => f(x)) (id) (1) // 1. (id) bei f einsetzen
 <br>
@@ -128,7 +128,7 @@ document.writeln(a1(2)) // 2
 document.writeln(a2(2)) // 2
 <br>
 
-<h3>eta reduction</h3>
+<h3>Eta Reduction</h3>
 <p>eta: Cancel parameter</p>
 x => y => plus(x)(y) // 1. (y) bei y einsetzen
 <br>
@@ -150,25 +150,59 @@ const Pair = x => y => f => f(x)(y);
 <br>
 <br>
 <h4>Either (f.e. for safe division)</h4>
-const safeDiv = num => divisor => divisor === 0 ?
-<br>Left("schlecht!") : Right(num / divisor);
-<br>
-<br>either( safeDiv(1)(0)  )
-<br>( x => console.error(x))
-<br>( x => console.log(x));
-<br>// we need to provide to functions --> checking for error case!!!
-<br>
+<strong>standart either</strong>
 <br>const Left = x => f => g => f(x)
 <br>const Right = x => f => g =>g(x)
-<br>const either = e => f => g => e(f)(g) // eta reduction
+<br>const either = e => f => g => e(f)(g) // this can then be reduced by eta reduction
+<br>
 <br> const either = e => f => e(f)// // eta reduction
 <br>const either = e => e // // eta reduction
 <br>const either = id;
+<br><br>
+<strong>Example I: Divison</strong><br>
+const safeDiv = num => divisor => divisor === 0 ? Left("cannot divide by 0!") : Right(num / divisor);
 <br>
-einfach: safeDiv(1)(1)
-<br>(x => console.error(x))
-<br>(x => console.log(x))
 <br>
+const result = safeDiv(8)(0);<br>
+either(result)(msg => document.writeln(msg))(val => document.writeln(val)) // result is 'cannot divide'<br>
+----<br>
+const result = safeDiv(8)(2);<br>
+either(result)(msg => document.writeln(msg))(val => document.writeln(val)) // result is '4'<br>
+<br>
+<br><strong>remember: we need to provide to functions --> checking for error case!!!</strong>
+<br>
+<br>
+<h4>Array</h4>
+<strong>Beispiel I</strong>
+<br>
+const s1 = x => y => z => x; // select 1st argument<br>
+const s2 = x => y => z => y; // select 2nd argument<br>
+const s3 = x => y => z => z; // select 3rd argument<br>
+<br>
+const triple = x => y => z => f => f(x)(y)(z);<br>
+const a = t => t(s1);<br>
+const b = t => t(s2);<br>
+const c = t => t(s3);<br>
+<br>
+const person = triple;<br>
+const firstname = a;<br>
+const lastname = b;<br>
+const age = c;<br>
+<br>
+const bran = person("Brendan")("Eich")(50); // Fill array 'bran'!!<br>
+document.writeln(firstname(bran) === "Brendan"); // retrieve from array<br>
+<br>
+<strong>Several arrays, Beispiel II</strong><br>
+const bran = person("Brendan");<br>
+const raven = bran("Stark")(16); // ['Brendan', "Stark", 16]<br>
+const eich = bran("Eich")(50);<br>
+<br> fill array:<br>
+const raven = bran("Stark")(16); // ['Brendan', "Stark", 16]<br>
+const eich = bran("Eich")(50);// ['Brendan', "Eich", 50]<br><br>
+retrieve data:<br>
+document.writeln(age(raven)); // 16<br>
+document.writeln(firstname(raven) ); //Brendam<br>
+document.writeln(lastname(raven) ); //Stark<br>
 <br>
 <br>
 <br>
