@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Higher Order Functions</title>
+</head>
+<body>
+<h2>Partial Application</h2>
+<h3>(a,b) vs. a => b =></h3>
+// multiple arguments<br>
+const times = (a,b) => a x b;<br>
+times(2);// returns undefined or something else...not number<br><br>
+
+// argument chain, curried<br>
+const times = a => b => a * b;<br>
+times(2), // returns a function<br>
+<br>
+<h3>Partial Application:Map</h3><br>
+const times = a => b => a * b<br>
+const twoTimes = times(2)<br>
+<br>
+// the 3 versions are kind of all the same (communication is a bit different)<br>
+[1,2,3].map(x => times(2)(x));<br>
+[1,2,3].map(times(2)); // eta reduction<br>
+[1,2,3].map(x => twoTimes); // other reference, point-free-notation<br>
+<strong>Outer-type and cardinality(size) stays fix when mapping. Inner-type can change when mapping.</strong>
+
+<h3>Filter</h3>
+x => x % 2 === 1 // fucntion needs to return a predicate (boolean)<br>
+--> filter out what doenst fit the check (retain all in java)<br>
+<strong>outer type still array, cardinality can change, inner type stays</strong>
+<br>
+<br>Example:<br>
+const odd = x => x % 2 === 1;<br>
+[1, 2, 3].filter(x => x % 2 === 1);<br>
+[1, 2, 3].filter(x => odd(x));<br> // eta reduction
+[1, 2, 3].filter(odd);<br>
+
+<h3>Reduce</h3>
+reduce((acc, cur) => acc + cur) // accumulator & commulator<br>
+<strong>Does not keep the outer-type necessarily, f.e. from array to a number</strong><br><br>
+<strong>in alphabetically order --> in other languages then JS don't rename ! use acc & cur</strong>
+<br>
+<br>
+Example: "un-partial" reduce
+const plus = (accu, cur) => accu + cur;<br>
+[1, 2, 3].reduce((accu, cur) => accu + cur);<br>
+[1, 2, 3].reduce(plus);<br>
+// variant with initial accu value as 2nd argument<br>
+// then cur starts at first element<br>
+[1, 2, 3].reduce(plus, 0);<br>
+// option to set start element: 0 is the startelement, to prevent problems f.e when the array is empty.
+<br>
+
+
+
+
+
+</body>
+</html>

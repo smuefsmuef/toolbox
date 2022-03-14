@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Types in Java Script, jsDoc</title>
+</head>
+<body>
+<a href="https://webengineering-fhnw.github.io/Kolibri/">Further info   for example about observables</a>
+<a href="https://jsdoc.app/">Define types with jsDoc</a>
+<script>
+
+  // 2. but in js you can define the type!
+  /**
+   * @type{ String }
+   */
+
+// 1. start with defining a new variable always as a const, change it maybe later to let if needed.
+// const a = 'hello';
+  let a = 'hello';
+  console.log(a);
+  // now a number!
+  // a = 0;
+
+  a = "0";
+
+  // --> inspect code with right click on a code
+
+  /**
+   * here is some more info about foo
+   * @param { String | Number } x - union type, some type, either in lambda
+   */
+
+// alternatives
+// @param { "hi | hello" } x - allowed strings
+// @param { "String | Number" } x -
+
+  const foo = x => console.log(x);
+
+  foo("hi");
+  foo(6);
+  foo("hoi");
+
+
+
+</script>
+</body>
+</html>
