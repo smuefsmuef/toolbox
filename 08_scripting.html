@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scripting</title>
+</head>
+<body>
+<h1>Scripting</h1>
+
+<h2>Progressive Web App</h2>
+<p>Progressively load data and then use it</p>
+
+<h3>Example 1: PWA</h3>
+<strong>Problem</strong>, old way: Repetition, loading every single test <br>
+<p>
+< script src="function/function.js"></ script> <br>
+< script src="function/functionTest.js"></ script> <br>
+< script src="lambda/lambda.js"></ script><br>
+< script src="lambda/lambdaTest.js"></ script><br>
+< script src="snake/snake.js"></ script><br>
+< script src="snake/snakeTest.js"></ script></p>
+
+<strong>idea:</strong> execute the tests nicer <br>
+Loading test suite dynamically. (check commented out code) <br>
+<br>
+<br>
+
+< script><br>
+<br>
+  [<br>
+    "function",<br>
+    "lambda",<br>
+    "snake"<br>
+  ].forEach(test =><br>
+      // console.log(test)<br>
+      document.writeln(`< script src="${name}/${name}Test.js"><`+` /script>`)<br>
+    // breaking the browser security, avoided SOP (same origin property)<br>
+  )<br>
+</ script><br><br>
+
+<!--Working code-->
+<!--<script>-->
+<!--[-->
+<!--"function",-->
+<!--"lambda",-->
+<!--"snake"-->
+<!--].forEach(test =>-->
+<!--// console.log(test)-->
+<!--document.writeln(`<script src="${name}/${name}Test.js"><`+` /script>`)-->
+<!--// breaking the browser security, avoided SOP (same origin property)<br>-->
+<!--)-->
+<!--</script>-->
+
+
+
+
+<h3>Example 2: Plotter: eval</h3>
+Function() is like eval() but declares parameters and executes in the global scope. It creates a reference. <br><br>
+const add = Function('x','y','return x+y'); <br>
+<strong>the last param is the function, don't forget return!</strong>
+add(1, 2); <br>
+add(2, 3); // no need to re-parse <br>
+<br>
+function start() {<br>
+const userFunction = document.getElementById('user_function');<br>
+const canvas       = document.getElementById('canvas');<br>
+<br>
+const makeF = () => Function("x", "return " + userFunction.value + ";");<br>
+userFunction.onchange = _ =>  display(canvas, makeF());<br>
+display(canvas, makeF()); } <br>
+
+<h3>Example 2: Bonus calculation, eval & Function</h3>
+
+<strong>eval</strong><br>
+// given<br>
+const bonusFormula = 'employee.bonus = employee.revenue * 0.2';<br>
+
+// solution<br>
+const bonusCalculation = employee =>  eval(bonusFormula); <br>
+(use employee --> because used in the formula to reference<br>
+<br>
+//Your solution will be tested against:<br>
+const e = {revenue: 10000, bonus: null};<br>
+bonusCalculation(e);<br>
+document.writeln(e.bonus === e.revenue * 0.2); // true<br>
+document.writeln(bonusFormula); // employee.bonus = employee.revenue * 0.2<br>
+document.writeln(e.bonus); // 2000<br><br>
+
+<strong>Function</strong><br>
+// given<br>
+const bonusFormula = 'employee.revenue * 0.2';<br>
+<br>
+// solution<br>
+const bonusCalculation =  Function('employee', 'return employee.bonus = ' + bonusFormula);<br><br>
+bonusCalculation(e);<br>
+document.writeln(e.bonus === e.revenue * 0.2); // true<br>
+document.writeln(bonusFormula); // employee.bonus = employee.revenue * 0.2<br>
+document.writeln(e.bonus); // 2000<br><br>
+<br>
+</body>
+</html>
