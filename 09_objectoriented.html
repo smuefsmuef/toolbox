@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Object Oriented</title>
+</head>
+<body>
+
+<h1>OOP JS</h1>
+
+<h2>Encoding Objects in JS</h2>
+
+<h3>1) Open, dynmaic</h3>
+const good = { <br>
+firstname : "Good",  <br>
+lastname : "Boy", <br>
+getName <br>
+: function() { <br>
+return this.firstname + " " + this.lastname <br>
+// here i also need it because firstname is not available as reference in the current scope <br>
+// this-binding refers to the left of '.' where it's called <br>
+} <br>
+}; <br> <strong>
+no safety but super dynamic <br>
+unobvious how to share structure <br>
+beware of "this"! See Adam Breindl last week. <br></strong>
+<br>
+const store = { <br>
+accessor : good.getName  // when we store a reference elsewhere<br>
+};<br>
+ok.push(store.accessor()  === "undefined undefined"); // OOPS!<br>
+<br>}) ();<br>
+<strong>
+// because 'this' is not known here, because the receiver object is now 'store' and the store has no firstname/lastname<br>
+// bound on the call side (dynmaically)!!<br>
+report("object-literal", ok);<br>
+</strong>
+
+<br>
+<strong>only applies to functions with Function keyword, not to '=>'!!</strong><br>
+use => referes to the scope before! () => {this.firstname + " " + this.lastname}<br>
+<br>
+<strong>Super dynmaic: add new functions, add/remove new properteis at any time!</strong>
+<br>
+
+<h3>2) Closed, explicit</h3>
+// Using Constructor Function<br>
+// working on our closure scope (no one can touch it, no this!)<br>
+// returning a new Object, using literal construction<br>
+<br>
+<br>
+function Person(first, last) { <br>
+let firstname = first; // optional<br>
+let lastname = last;<br>
+return {<br>
+getName: function() {<br>
+return firstname + " " + lastname }<br>
+}}}<br>
+<strong>
+// here exposing only the function and refereing to the closure scope<br>
+// here wer're only sharing the functions. all of them will have getName property<br>
+</strong>
+<br><br>
+
+<strong>
+  // best safety, easy to share structure, but no class
+  // we don't have a class here, don't know. we can not ask if Person is a class...
+</strong><br>
+
+<h3>2) Mixed, classified</h3>
+<strong>
+// have all benefits, and 'class' :)<br>
+// depends on new<br>
+// we create our own internal scope<br>
+  // Why? - because it's the stadnart way. http://www.typescriptlang.org --> check pic
+</strong>
+<img src="pics/09_typescript_to_constructor_example.jpg" width="500px" alt="compile">
+
+<br>
+const Person = ( () => { // lexical scope<br>
+function Person(first, last) { // ctor, binding<br>
+this.firstname = first;<br>
+this.lastname = last;<br>
+}<br>
+Person.prototype.getName = function() {<br> // value is a function, must use this. keyword<br>
+return this.firstname + " " + this.lastname;<br> // this. referes to object to get name property<br>
+};<br>
+return Person;<br>
+}) (); // IIFE<br> // immedtiatly call the function, goal: create a own scope<br>
+<strong>
+// what is in the scope: function that create Person<br>
+// new Person("Good", "Boy") instanceof Person<br>
+// new ==> constructs a new empty object, takes this Person (function Constructor, it's also an object) new assigns property Prototype to the empty object<br>
+// this will always refere to the key 'new' <br>
+// now you can ask it if it's a instanceof Person<br>
+// What is Person --> Constructor (not a type like in java), we ask the new Person if it was created by the Person Constructor<br>
+</strong>
+<br>
+<strong>Tipps: from Douglas Crockford <br>
+I stopped using 'new' <br>
+stopped using Object.create <br>
+stopped using 'this' <br>
+stopepd using 'null' <br></strong>
+
+<h2>Prototype</h2>
+<strong>// Classifies objects similar to a "type"<br>
+// Manages shared properties<br>
+// great power: all objects that are made from a constructor and share a prototype. <br>
+// changing the prototype changes the objects all at the same time.<br>
+// Prototype itself is an object. <br>
+// change it... <br>
+Can be checked, e.g. by instanceof<br>
+</strong>
+
+
+<h2>Remember 'New'</h2>
+<strong>
+  Calls the constructor-Function<br>
+  (cannot be a lambda)!!<br>
+Creates a new Runtime-Scope <br>
+Sets the prototype<br>
+</strong>
+
+<h2>Example, OOPSIE Game</h2>
+
+
+
+</body>
+</html>
